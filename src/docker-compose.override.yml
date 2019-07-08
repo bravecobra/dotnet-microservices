@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+  ordering:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ServiceConfig__serviceDiscoveryAddress=http://consul:8500
+      - ServiceConfig__serviceAddress=http://ordering:80
+      - ServiceConfig__serviceName=ordering
+      - ServiceConfig__serviceId=ordering-v1
+    ports:
+      - "80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+  api.gateway:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80:80"
+
+  consul:
+    ports:
+    - "8500:8500"

@@ -1,0 +1,18 @@
+{
+  "ReRoutes": [
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "ServiceName": "ordering",
+      "UpstreamPathTemplate": "/api/ordering/{everything}",
+      "UpstreamHttpMethod": [ "Get" ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "ServiceDiscoveryProvider": {
+      "Host": "consul",
+      "Port": 8500,
+      "Type": "Consul"
+    }
+  }
+}
