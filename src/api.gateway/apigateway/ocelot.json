@@ -6,6 +6,13 @@
       "ServiceName": "ordering",
       "UpstreamPathTemplate": "/api/ordering/{everything}",
       "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "ServiceName": "deliveries",
+      "UpstreamPathTemplate": "/api/logistics/{everything}",
+      "UpstreamHttpMethod": [ "Get" ]
     }
   ],
   "GlobalConfiguration": {

@@ -7,8 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using ordering.Repositories;
 
 namespace ordering.Controllers
-{
-    [Route("api/[controller]")]
+{ 
     [ApiController]
     public class OrdersController : ControllerBase
     {

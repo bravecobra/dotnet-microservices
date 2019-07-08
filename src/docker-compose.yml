@@ -8,6 +8,13 @@ services:
       dockerfile: services/ordering/Dockerfile
     container_name: ordering
 
+  deliveries:
+    image: deliveries:latest
+    build:
+      context: .
+      dockerfile: services/deliveries/Dockerfile
+    container_name: deliveries
+
   api.gateway:
     image: apigateway:latest
     build:
