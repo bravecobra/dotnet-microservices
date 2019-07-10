@@ -32,3 +32,4 @@
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/api/values"
     }
   }
+}

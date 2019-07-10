@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3.5'
 
 services:
   ordering:
@@ -7,6 +7,8 @@ services:
       context: .
       dockerfile: services/ordering/Dockerfile
     container_name: ordering
+    networks:
+      microservices:
 
   deliveries:
     image: deliveries:latest
@@ -14,6 +16,8 @@ services:
       context: .
       dockerfile: services/deliveries/Dockerfile
     container_name: deliveries
+    networks:
+      microservices:
 
   api.gateway:
     image: apigateway:latest
@@ -21,9 +25,30 @@ services:
       context: .
       dockerfile: api.gateway/apigateway/Dockerfile
     container_name: apigateway
+    networks:
+      microservices:
 
   consul:
     image: consul:latest
     command: consul agent -dev -log-level=warn -ui -client=0.0.0.0
     hostname: consul
     container_name: consul
+    networks:
+      microservices:
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    networks:
+      microservices:
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    networks:
+      microservices:
+
+
+networks:
+  microservices:
+    driver: 'bridge'

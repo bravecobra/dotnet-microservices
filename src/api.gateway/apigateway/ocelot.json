@@ -1,6 +1,27 @@
 {
   "ReRoutes": [
     {
+      "DownstreamPathTemplate": "/metrics",
+      "DownstreamScheme": "http",
+      "ServiceName": "ordering",
+      "UpstreamPathTemplate": "/api/ordering/metrics",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/metrics-text",
+      "DownstreamScheme": "http",
+      "ServiceName": "ordering",
+      "UpstreamPathTemplate": "/api/ordering/metrics-text",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/env",
+      "DownstreamScheme": "http",
+      "ServiceName": "ordering",
+      "UpstreamPathTemplate": "/api/ordering/env",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
       "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
       "ServiceName": "ordering",
