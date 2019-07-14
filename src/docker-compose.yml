@@ -7,9 +7,9 @@ services:
       dockerfile: Dockerfile.ordering
     container_name: ordering
     depends_on:
-      - "consul"
+      - consul
     networks:
-      microservices: null    
+      microservices: null
   deliveries:
     image: 'deliveries:latest'
     build:
@@ -17,7 +17,7 @@ services:
       dockerfile: Dockerfile.deliveries
     container_name: deliveries
     depends_on:
-      - "consul"
+      - consul
     networks:
       microservices: null
   api.gateway:
@@ -26,27 +26,31 @@ services:
       context: .
       dockerfile: Dockerfile.apigateway
     container_name: apigateway
+    depends_on:
+      - consul
+      - ordering
+      - deliveries
     networks:
       microservices: null
   consul:
     image: 'consul:latest'
     command: consul agent -dev -log-level=warn -ui -client=0.0.0.0
     hostname: consul
-    container_name: consul    
+    container_name: consul
     networks:
       microservices: null
   prometheus:
     image: prom/prometheus
     container_name: prometheus
     depends_on:
-      - "consul"    
+      - consul
     networks:
       microservices: null
   grafana:
     image: grafana/grafana
     container_name: grafana
     depends_on:
-      - "prometheus"
+      - prometheus
     networks:
       microservices: null
 networks:

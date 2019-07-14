@@ -10,5 +10,7 @@ This repo show how you can setup .NET Core microservices and how to
 * ...
 
 Todo
+
 * Add distributed structured logging (serilog)
 * Add distributed tracing (Jaeger)
+* Add TLS support for ocelot
