@@ -4,10 +4,10 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/core/sdk:2.2-stretch AS build
 WORKDIR /src
-COPY ["api.gateway/apigateway/apigateway.csproj", "api.gateway/apigateway/"]
-RUN dotnet restore "api.gateway/apigateway/apigateway.csproj"
+COPY ["services/apigateway/apigateway.csproj", "services/apigateway/"]
+RUN dotnet restore "services/apigateway/apigateway.csproj"
 COPY . .
-WORKDIR "/src/api.gateway/apigateway"
+WORKDIR "/src/services/apigateway"
 RUN dotnet build "apigateway.csproj" -c Release -o /app
 
 FROM build AS publish

@@ -1,10 +1,6 @@
-﻿using System.IO;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using Ocelot.DependencyInjection;
-using Ocelot.Middleware;
-using Ocelot.Provider.Consul;
 
 namespace apigateway
 {
@@ -12,9 +8,7 @@ namespace apigateway
     {
         public static void Main(string[] args)
         {
-            new WebHostBuilder()
-                .UseKestrel()
-                .UseContentRoot(Directory.GetCurrentDirectory())
+            WebHost.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
                     config
@@ -24,18 +18,7 @@ namespace apigateway
                         .AddJsonFile("ocelot.json")
                         .AddEnvironmentVariables();
                 })
-                .ConfigureServices(s => {
-                    s.AddOcelot().AddConsul();
-                })
-                .ConfigureLogging((hostingContext, logging) =>
-                {
-                    logging.AddConsole();
-                })
-                .UseIISIntegration()
-                .Configure(app =>
-                {
-                    app.UseOcelot().Wait();
-                })
+                .UseStartup<Startup>()
                 .Build()
                 .Run();
         }

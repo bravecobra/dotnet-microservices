@@ -4,10 +4,14 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/core/sdk:2.2-stretch AS build
 WORKDIR /src
-COPY ["ordering/ordering.csproj", "ordering/"]
-RUN dotnet restore "ordering/ordering.csproj"
+
+COPY ["./common/infrastructure/ServiceDiscovery/ServiceDiscovery.csproj", "common/infrastructure/ServiceDiscovery/"]
+RUN dotnet restore "common/infrastructure/ServiceDiscovery/ServiceDiscovery.csproj"
+
+COPY ["services/ordering/ordering.csproj", "services/ordering/"]
+RUN dotnet restore "services/ordering/ordering.csproj"
 COPY . .
-WORKDIR "/src/ordering"
+WORKDIR "/src/services/ordering"
 RUN dotnet build "ordering.csproj" -c Release -o /app
 
 FROM build AS publish

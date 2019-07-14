@@ -1,6 +1,4 @@
-﻿using System;
-using App.Metrics;
-using App.Metrics.Extensions.Configuration;
+﻿using App.Metrics;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -25,12 +23,15 @@ namespace ordering
         {
             ConfigureConsul(services);
             services.AddSingleton<IOrdersRepository, OrdersRepository>();
+
             var metrics = AppMetrics.CreateDefaultBuilder()
                 .Build();
             services.AddMetrics(metrics);
             services.AddMetricsTrackingMiddleware();
             services.AddMetricsReportingHostedService();
-            services.AddMvc().AddMetrics().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc()
+                .AddMetrics()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,7 +51,6 @@ namespace ordering
             app.UseMetricsAllMiddleware();
             app.UseMvc();
         }
-
         private void ConfigureConsul(IServiceCollection services)
         {
             var serviceConfig = Configuration.GetServiceConfig();

@@ -13,16 +13,17 @@ services:
       - "8001:8001"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro    
   deliveries:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8002
       - ServiceConfig__serviceDiscoveryAddress=http://consul:8500
-      - ServiceConfig__serviceAddress=http://deliveries:80
+      - ServiceConfig__serviceAddress=http://deliveries:8002
       - ServiceConfig__serviceName=deliveries
       - ServiceConfig__serviceId=deliveries-v1
     ports:
-      - "80"
+      - "8002:8002"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro

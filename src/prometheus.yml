@@ -3,27 +3,27 @@ global:
   evaluation_interval: 5s # Evaluate rules every 15 seconds. The default is every 1 minute.
 
 scrape_configs:
-  - job_name: test
-    static_configs:
-      - targets: ['ordering:8001']
-    metrics_path: /metrics-text
-  # - job_name: consul-service
-  #   consul_sd_configs:
-  #     - server: 'consul:8500'
-  #       datacenter: dc1
-  #       services: ['ordering']
+  # - job_name: test
+  #   static_configs:
+  #     - targets: ['ordering:8001']
+  #   metrics_path: /metrics-text
+  - job_name: consul-service
+    consul_sd_configs:
+      - server: 'consul:8500'
+        datacenter: dc1
+        services: ['ordering', 'deliveries']
 
-    # relabel_configs:
+    relabel_configs:
     # - source_labels: ['__meta_consul_address', '__meta_consul_service_port']
     #   separator: ':'
     #   regex: '(.*)'
     #   target_label: '__address__'
     #   replacement: '$1'
-    # - source_labels: ['__meta_consul_service']
-    #   separator: ':'
-    #   regex: '(.*)'
-    #   target_label: '__metrics_path__'
-    #   replacement: '/api/$1/metrics'      
+    - source_labels: ['__meta_consul_service']
+      separator: ':'
+      regex: '(.*)'
+      target_label: '__metrics_path__'
+      replacement: '/metrics-text'      
     # - source_labels: ['__meta_consul_service']
     #   regex:         '(.*)'
     #   target_label:  'job'
