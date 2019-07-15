@@ -26,6 +26,10 @@ services:
       context: ..
       dockerfile: compose/Dockerfile.apigateway
     container_name: apigateway
+    depends_on:
+      - consul
+      - ordering
+      - deliveries
     networks:
       microservices: null
   consul:
