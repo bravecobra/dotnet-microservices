@@ -3,28 +3,28 @@ services:
   ordering:
     image: 'ordering:latest'
     build:
-      context: .
-      dockerfile: Dockerfile.ordering
+      context: ..
+      dockerfile: compose/Dockerfile.ordering
     container_name: ordering
     depends_on:
-      - "consul"
+      - consul
     networks:
-      microservices: null    
+      microservices: null
   deliveries:
     image: 'deliveries:latest'
     build:
-      context: .
-      dockerfile: Dockerfile.deliveries
+      context: ..
+      dockerfile: compose/Dockerfile.deliveries
     container_name: deliveries
     depends_on:
-      - "consul"
+      - consul
     networks:
       microservices: null
   api.gateway:
     image: 'apigateway:latest'
     build:
-      context: .
-      dockerfile: Dockerfile.apigateway
+      context: ..
+      dockerfile: compose/Dockerfile.apigateway
     container_name: apigateway
     networks:
       microservices: null
@@ -32,21 +32,21 @@ services:
     image: 'consul:latest'
     command: consul agent -dev -log-level=warn -ui -client=0.0.0.0
     hostname: consul
-    container_name: consul    
+    container_name: consul
     networks:
       microservices: null
   prometheus:
     image: prom/prometheus
     container_name: prometheus
     depends_on:
-      - "consul"    
+      - consul
     networks:
       microservices: null
   grafana:
     image: grafana/grafana
     container_name: grafana
     depends_on:
-      - "prometheus"
+      - prometheus
     networks:
       microservices: null
 networks:
