@@ -3,11 +3,11 @@ WORKDIR /app
 EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/core/sdk:2.2-stretch AS build
-WORKDIR /src
-COPY ["services/apigateway/apigateway.csproj", "services/apigateway/"]
-RUN dotnet restore "services/apigateway/apigateway.csproj"
+WORKDIR /build
+COPY ["src/services/apigateway/apigateway.csproj", "src/services/apigateway/"]
+RUN dotnet restore "src/services/apigateway/apigateway.csproj"
 COPY . .
-WORKDIR "/src/services/apigateway"
+WORKDIR "/build/src/services/apigateway"
 RUN dotnet build "apigateway.csproj" -c Release -o /app
 
 FROM build AS publish

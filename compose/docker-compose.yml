@@ -3,8 +3,8 @@ services:
   ordering:
     image: 'ordering:latest'
     build:
-      context: .
-      dockerfile: Dockerfile.ordering
+      context: ..
+      dockerfile: compose/Dockerfile.ordering
     container_name: ordering
     depends_on:
       - consul
@@ -13,8 +13,8 @@ services:
   deliveries:
     image: 'deliveries:latest'
     build:
-      context: .
-      dockerfile: Dockerfile.deliveries
+      context: ..
+      dockerfile: compose/Dockerfile.deliveries
     container_name: deliveries
     depends_on:
       - consul
@@ -23,8 +23,8 @@ services:
   api.gateway:
     image: 'apigateway:latest'
     build:
-      context: .
-      dockerfile: Dockerfile.apigateway
+      context: ..
+      dockerfile: compose/Dockerfile.apigateway
     container_name: apigateway
     depends_on:
       - consul
