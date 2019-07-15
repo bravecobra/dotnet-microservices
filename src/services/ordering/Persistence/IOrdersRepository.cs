@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using ordering.Models;
+using ordering.Domain;
 
-namespace ordering.Repositories
+namespace ordering.Persistence
 {
     public interface IOrdersRepository
     {

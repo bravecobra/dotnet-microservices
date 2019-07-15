@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ordering.Models;
+using ordering.Domain;
 
-namespace ordering.Repositories
+namespace ordering.Persistence.Impl
 {
     public class OrdersRepository : IOrdersRepository
     {

@@ -1,11 +1,7 @@
-﻿using System;
-
-namespace deliveries.Models
+﻿namespace deliveries.Controllers.Dto
 {
-    public class Address
+    public class AddressDto
     {
-        public Guid Id { get; set; }
-
         public string ZipCode { get; set; }
 
         public string StreetAddress { get; set; }

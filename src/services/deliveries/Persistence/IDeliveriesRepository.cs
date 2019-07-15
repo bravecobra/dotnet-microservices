@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using deliveries.Models;
+using deliveries.Domain;
 
-namespace deliveries.Repositories
+namespace deliveries.Persistence
 {
     public interface IDeliveriesRepository
     {

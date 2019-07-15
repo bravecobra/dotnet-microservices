@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using ordering.Repositories;
+using ordering.Controllers.Dto;
+using ordering.Persistence;
 
 namespace ordering.Controllers
 { 
@@ -12,10 +12,12 @@ namespace ordering.Controllers
     public class OrdersController : ControllerBase
     {
         private readonly IOrdersRepository _ordersRepository;
+        private readonly IMapper _mapper;
 
-        public OrdersController(IOrdersRepository ordersRepository)
+        public OrdersController(IOrdersRepository ordersRepository, IMapper mapper)
         {
             _ordersRepository = ordersRepository ?? throw new ArgumentNullException(nameof(ordersRepository));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         [HttpGet]
@@ -29,7 +31,7 @@ namespace ordering.Controllers
 
             var orders = await _ordersRepository.GetClientOrders(clientId);
 
-            return Ok(orders);
+            return Ok(_mapper.Map<IEnumerable<OrderDto>>(orders));
         }
 
         [HttpGet("api/orders/{orderId:guid}")]
@@ -42,7 +44,7 @@ namespace ordering.Controllers
 
             var order = await _ordersRepository.GetOrder(orderId);
 
-            return Ok(order);
+            return Ok(_mapper.Map<OrderDto>(order));
         }
     }
 }

@@ -1,16 +1,16 @@
 ﻿using System;
+using ordering.Domain;
 
-namespace ordering.Models
+namespace ordering.Controllers.Dto
 {
-    public class Order
+    public class OrderDto
     {
         public Guid Id { get; set; }
 
         public OrderStates State { get; set; }
 
         public DateTimeOffset Created { get; set; }
-        public DateTimeOffset Modified { get; set; }
 
-        public Guid ClientId { get; set; }
+        public DateTimeOffset Modified { get; set; }
     }
 }

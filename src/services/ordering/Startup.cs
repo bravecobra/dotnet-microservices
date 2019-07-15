@@ -1,11 +1,14 @@
-﻿using App.Metrics;
+﻿using System;
+using App.Metrics;
+using AutoMapper;
 using Metrics;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ordering.Repositories;
+using ordering.Persistence;
+using ordering.Persistence.Impl;
 using ServiceDiscovery;
 
 namespace ordering
@@ -23,6 +26,7 @@ namespace ordering
         public void ConfigureServices(IServiceCollection services)
         {
             ConfigureConsul(services);
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSingleton<IOrdersRepository, OrdersRepository>();
             services.AddMetricsServices();
             services.AddMvc()

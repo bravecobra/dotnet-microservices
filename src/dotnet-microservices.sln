@@ -15,6 +15,10 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "..\compos
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Metrics", "common\infrastructure\Metrics\Metrics.csproj", "{0672DB2D-64E0-438A-B641-0B142921BCD8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{C30FCD83-A085-4EFD-801A-67126A9DE698}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{7A9A2D27-28B5-4E7E-B9E1-F6CB1AF8A379}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +52,13 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D0A98687-F25B-46E8-8283-C74920C07E6C} = {C30FCD83-A085-4EFD-801A-67126A9DE698}
+		{91234B62-2ECF-4BF5-9632-6AD3E7470A87} = {7A9A2D27-28B5-4E7E-B9E1-F6CB1AF8A379}
+		{D0D51ED2-2288-4588-BF5E-6883BA673140} = {C30FCD83-A085-4EFD-801A-67126A9DE698}
+		{D25BBC84-87C8-48CB-856D-D1357542A24B} = {C30FCD83-A085-4EFD-801A-67126A9DE698}
+		{0672DB2D-64E0-438A-B641-0B142921BCD8} = {7A9A2D27-28B5-4E7E-B9E1-F6CB1AF8A379}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B424887F-C7EF-434D-9E37-0A7F3088D308}

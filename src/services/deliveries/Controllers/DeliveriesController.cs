@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using deliveries.Repositories;
-using Microsoft.AspNetCore.Http;
+using AutoMapper;
+using deliveries.Controllers.Dto;
+using deliveries.Persistence;
 using Microsoft.AspNetCore.Mvc;
 
 namespace deliveries.Controllers
@@ -12,10 +12,12 @@ namespace deliveries.Controllers
     public class DeliveriesController : ControllerBase
     {
         private readonly IDeliveriesRepository _deliveriesRepository;
+        private readonly IMapper _mapper;
 
-        public DeliveriesController(IDeliveriesRepository deliveriesRepository)
+        public DeliveriesController(IDeliveriesRepository deliveriesRepository,IMapper mapper)
         {
             _deliveriesRepository = deliveriesRepository ?? throw new ArgumentNullException(nameof(deliveriesRepository));
+            _mapper = mapper;
         }
 
         [HttpGet("api/orders/{orderId:guid}/deliveries")]
@@ -28,7 +30,7 @@ namespace deliveries.Controllers
 
             var deliveries = await _deliveriesRepository.GetOrderDeliveries(orderId);
 
-            return Ok(deliveries);
+            return Ok(_mapper.Map<IEnumerable<DeliveryDto>>(deliveries));
         }
 
         [HttpGet("api/deliveries/{deliveryId:guid}")]
@@ -41,7 +43,7 @@ namespace deliveries.Controllers
 
             var delivery = await _deliveriesRepository.GetDelivery(deliveryId);
 
-            return Ok(delivery);
+            return Ok(_mapper.Map<DeliveryDto>(delivery));
         }
     }
 }

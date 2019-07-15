@@ -1,5 +1,8 @@
-﻿using App.Metrics;
-using deliveries.Repositories;
+﻿using System;
+using App.Metrics;
+using AutoMapper;
+using deliveries.Persistence;
+using deliveries.Persistence.Impl;
 using Metrics;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -23,7 +26,7 @@ namespace deliveries
         public void ConfigureServices(IServiceCollection services)
         {
             ConfigureConsul(services);
-
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSingleton<IDeliveriesRepository, DeliveriesRepository>();
             services.AddMetricsServices();
             services.AddMvc()

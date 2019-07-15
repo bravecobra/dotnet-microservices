@@ -1,4 +1,4 @@
-﻿namespace ordering.Models
+﻿namespace ordering.Domain
 {
     public enum OrderStates
     {

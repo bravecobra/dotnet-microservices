@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using deliveries.Models;
+using deliveries.Domain;
 
-namespace deliveries.Repositories
+namespace deliveries.Persistence.Impl
 {
     public class DeliveriesRepository : IDeliveriesRepository
     {
