@@ -17,7 +17,7 @@ namespace ordering.Persistence.Impl
             for (var i = 0; i < numberOfOrders; i++)
             {
                 var orderId = Guid.NewGuid();
-                var order = CreateMockOrder(clientId, orderId);
+                var order = await CreateMockOrder(clientId, orderId);
 
                 orders.Add(order);
             }
@@ -29,21 +29,21 @@ namespace ordering.Persistence.Impl
         {
             var clientId = Guid.NewGuid();
 
-            return CreateMockOrder(clientId, orderId);
+            return await CreateMockOrder(clientId, orderId);
         }
 
-        private static Order CreateMockOrder(Guid clientId, Guid orderId)
+        private static Task<Order> CreateMockOrder(Guid clientId, Guid orderId)
         {
             var createdAt = DateTimeOffset.UtcNow;
 
-            return new Order
+            return Task.FromResult(new Order
             {
                 Id = orderId,
                 ClientId = clientId,
                 Created = createdAt,
                 Modified = createdAt,
                 State = OrderStates.Created
-            };
+            });
         }
     }
 }

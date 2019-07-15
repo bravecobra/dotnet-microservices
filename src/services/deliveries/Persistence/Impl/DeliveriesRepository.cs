@@ -17,7 +17,7 @@ namespace deliveries.Persistence.Impl
             for (var i = 0; i < numberOfDeliveries; i++)
             {
                 var deliveryId = Guid.NewGuid();
-                var delivery = CreateMockDelivery(orderId, deliveryId);
+                var delivery = await CreateMockDelivery(orderId, deliveryId);
 
                 deliveries.Add(delivery);
             }
@@ -27,14 +27,14 @@ namespace deliveries.Persistence.Impl
 
         public async Task<Delivery> GetDelivery(Guid id)
         {
-            var delivery = CreateMockDelivery(Guid.NewGuid(), id);
+            var delivery = await CreateMockDelivery(Guid.NewGuid(), id);
 
             return delivery;
         }
 
-        private static Delivery CreateMockDelivery(Guid orderId, Guid deliveryId)
+        private static Task<Delivery> CreateMockDelivery(Guid orderId, Guid deliveryId)
         {
-            return new Delivery
+            return Task.FromResult<Delivery>(new Delivery
             {
                 Id = deliveryId,
                 OrderId = orderId,
@@ -42,7 +42,7 @@ namespace deliveries.Persistence.Impl
                 PhoneNumber = "911",
                 FromAddress = CreateMockAddress("Lithuania", "Kaunas", "", "", 0.0, 0.0),
                 ToAddress = CreateMockAddress("Lithuania", "Vilnius", "", "", 0.0, 0.0)
-            };
+            });
         }
 
         private static Address CreateMockAddress(string country, string city, string streetAddress, string zipCode,
