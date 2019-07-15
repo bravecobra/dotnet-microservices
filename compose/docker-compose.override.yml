@@ -1,54 +1,52 @@
 version: '3.5'
-
 services:
   ordering:
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:8001
-      - ServiceConfig__serviceDiscoveryAddress=http://consul:8500
-      - ServiceConfig__serviceAddress=http://ordering:8001
-      - ServiceConfig__serviceName=ordering
-      - ServiceConfig__serviceId=ordering-v1
+      - 'ASPNETCORE_ENVIRONMENT=Development'
+      - 'ASPNETCORE_URLS=http://+:8001'
+      - 'ServiceConfig__serviceDiscoveryAddress=http://consul:8500'
+      - 'ServiceConfig__serviceAddress=http://ordering:8001'
+      - 'ServiceConfig__serviceName=ordering'
+      - 'ServiceConfig__serviceId=ordering-v1'
     ports:
-      - "8001:8001"
+      - '8001:8001'
     volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro    
+      - '${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro'
+      - '${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro'
   deliveries:
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:8002
-      - ServiceConfig__serviceDiscoveryAddress=http://consul:8500
-      - ServiceConfig__serviceAddress=http://deliveries:8002
-      - ServiceConfig__serviceName=deliveries
-      - ServiceConfig__serviceId=deliveries-v1
+      - 'ASPNETCORE_ENVIRONMENT=Development'
+      - 'ASPNETCORE_URLS=http://+:8002'
+      - 'ServiceConfig__serviceDiscoveryAddress=http://consul:8500'
+      - 'ServiceConfig__serviceAddress=http://deliveries:8002'
+      - 'ServiceConfig__serviceName=deliveries'
+      - 'ServiceConfig__serviceId=deliveries-v1'
     ports:
-      - "8002:8002"
+      - '8002:8002'
     volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - '${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro'
+      - '${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro'
   api.gateway:
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - 'ASPNETCORE_ENVIRONMENT=Development'
     ports:
-      - "80:80"
+      - '80:80'
   consul:
     ports:
-      - "8500:8500"
+      - '8500:8500'
   prometheus:
     ports:
-      - "9090:9090"
+      - '9090:9090'
     volumes:
-      - prometheus:/prometheus
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - 'prometheus:/prometheus'
+      - './prometheus.yml:/etc/prometheus/prometheus.yml'
   grafana:
     environment:
-      - GF_INSTALL_PLUGINS=grafana-piechart-panel
+      - 'GF_INSTALL_PLUGINS=grafana-piechart-panel'
     ports:
-      - "3000:3000"
+      - '3000:3000'
     volumes:
-      - grafana:/var/lib/grafana
-    
+      - 'grafana:/var/lib/grafana'
 volumes:
   prometheus:
     driver: local

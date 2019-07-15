@@ -1,4 +1,5 @@
 ﻿using App.Metrics;
+using Metrics;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -23,12 +24,7 @@ namespace ordering
         {
             ConfigureConsul(services);
             services.AddSingleton<IOrdersRepository, OrdersRepository>();
-
-            var metrics = AppMetrics.CreateDefaultBuilder()
-                .Build();
-            services.AddMetrics(metrics);
-            services.AddMetricsTrackingMiddleware();
-            services.AddMetricsReportingHostedService();
+            services.AddMetricsServices();
             services.AddMvc()
                 .AddMetrics()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -48,14 +44,14 @@ namespace ordering
             }
 
             //app.UseHttpsRedirection();
-            app.UseMetricsAllMiddleware();
+            app.UseMetricsServices();
             app.UseMvc();
         }
         private void ConfigureConsul(IServiceCollection services)
         {
             var serviceConfig = Configuration.GetServiceConfig();
 
-            services.RegisterConsulServices(serviceConfig);
+            services.AddConsulServices(serviceConfig);
         }
     }
 }

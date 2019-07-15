@@ -9,7 +9,7 @@ namespace ServiceDiscovery
 {
     public static class ServiceDiscoveryExtensions
     {
-        public static void RegisterConsulServices(this IServiceCollection services, ServiceConfig serviceConfig)
+        public static void AddConsulServices(this IServiceCollection services, ServiceConfig serviceConfig)
         {
             if (serviceConfig == null)
             {

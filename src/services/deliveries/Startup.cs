@@ -1,5 +1,6 @@
 ﻿using App.Metrics;
 using deliveries.Repositories;
+using Metrics;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -24,11 +25,7 @@ namespace deliveries
             ConfigureConsul(services);
 
             services.AddSingleton<IDeliveriesRepository, DeliveriesRepository>();
-            var metrics = AppMetrics.CreateDefaultBuilder()
-                .Build();
-            services.AddMetrics(metrics);
-            services.AddMetricsTrackingMiddleware();
-            services.AddMetricsReportingHostedService();
+            services.AddMetricsServices();
             services.AddMvc()
                 .AddMetrics()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -48,7 +45,7 @@ namespace deliveries
             }
 
             //app.UseHttpsRedirection();
-            app.UseMetricsAllMiddleware();
+            app.UseMetricsServices();
             app.UseMvc();
         }
 
@@ -56,7 +53,7 @@ namespace deliveries
         {
             var serviceConfig = Configuration.GetServiceConfig();
 
-            services.RegisterConsulServices(serviceConfig);
+            services.AddConsulServices(serviceConfig);
         }
     }
 }
