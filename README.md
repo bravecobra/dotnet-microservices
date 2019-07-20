@@ -8,9 +8,3 @@ This repo show how you can setup .NET Core microservices and how to
 * add metrics with AppMetrics
 * add observability with Prometheus and Grafana
 * ...
-
-Todo
-
-* Add distributed structured logging (serilog)
-* Add distributed tracing (Jaeger)
-* Add TLS support for ocelot
