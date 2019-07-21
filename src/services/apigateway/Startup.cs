@@ -24,7 +24,7 @@ namespace apigateway
 
         public void Configure(IApplicationBuilder app)
         {
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseOcelot().Wait();
         }
     }
