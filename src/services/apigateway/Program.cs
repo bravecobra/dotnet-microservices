@@ -18,6 +18,7 @@ namespace apigateway
                         .AddJsonFile("ocelot.json")
                         .AddEnvironmentVariables();
                 })
+                .UseKestrel()
                 .UseStartup<Startup>()
                 .Build()
                 .Run();
