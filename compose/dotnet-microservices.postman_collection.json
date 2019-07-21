@@ -1,0 +1,142 @@
+{
+	"info": {
+		"_postman_id": "ad4eb0c9-b833-4cd9-9aca-14f224727fae",
+		"name": "dotnet-microservices",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Ordering",
+			"item": [
+				{
+					"name": "get an order",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost/api/ordering/orders/737b04c6-0c26-4bfd-96e6-a3fef6b4daf2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"ordering",
+								"orders",
+								"737b04c6-0c26-4bfd-96e6-a3fef6b4daf2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ordering env",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost/api/ordering/env",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"ordering",
+								"env"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ordering metrics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost/api/ordering/metrics-text",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"ordering",
+								"metrics-text"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Deliveries",
+			"item": [
+				{
+					"name": "get deliveries",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost/api/logistics/orders/737b04c6-0c26-4bfd-96e6-a3fef6b4daf2/deliveries",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"logistics",
+								"orders",
+								"737b04c6-0c26-4bfd-96e6-a3fef6b4daf2",
+								"deliveries"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logistics metrics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost/api/logistics/metrics-text",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"logistics",
+								"metrics-text"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logistics env",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost/api/logistics/env",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"logistics",
+								"env"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
