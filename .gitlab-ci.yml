@@ -1,11 +1,11 @@
-image:
-  name: docker/compose:1.24.1 # update tag to whatever version you want to use.
-  entrypoint: ["/bin/sh", "-c"]
+image: docker:latest
 
 services:
   - docker:dind
 
 before_script:
+  - sudo apt-get install -y python-pip
+  - sudo pip install docker-compose
   - docker version
   - docker-compose version
 
