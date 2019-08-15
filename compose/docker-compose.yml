@@ -4,7 +4,7 @@ services:
     image: 'ordering:latest'
     build:
       context: ..
-      dockerfile: compose/Dockerfile.ordering
+      dockerfile: src/services/ordering/Dockerfile
     container_name: ordering
     depends_on:
       - consul
@@ -14,7 +14,7 @@ services:
     image: 'deliveries:latest'
     build:
       context: ..
-      dockerfile: compose/Dockerfile.deliveries
+      dockerfile: src/services/deliveries/Dockerfile
     container_name: deliveries
     depends_on:
       - consul
@@ -24,7 +24,7 @@ services:
     image: 'apigateway:latest'
     build:
       context: ..
-      dockerfile: compose/Dockerfile.apigateway
+      dockerfile: src/services/apigateway/Dockerfile
     container_name: apigateway
     depends_on:
       - consul
