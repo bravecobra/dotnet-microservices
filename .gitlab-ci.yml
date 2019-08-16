@@ -1,14 +1,13 @@
-image: docker:latest
+image: tiangolo/docker-with-compose
 
 services:
   - docker:dind
 
 before_script:
-  - apk add --no-cache python py2-pip python-dev libffi-dev openssl-dev gcc libc-dev make
-  - pip install --no-cache-dir docker-compose
+  - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
   - docker version
-  - docker-compose version
-
+  - docker-compose version  
+  
 build:
   stage: build
   script:
