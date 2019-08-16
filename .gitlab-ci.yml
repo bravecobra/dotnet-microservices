@@ -4,8 +4,8 @@ services:
   - docker:dind
 
 before_script:
-  - apt-get install -y python-pip
-  - pip install docker-compose
+  - apk add --no-cache python py2-pip python-dev libffi-dev openssl-dev gcc libc-dev make
+  - pip install --no-cache-dir docker-compose
   - docker version
   - docker-compose version
 
