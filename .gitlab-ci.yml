@@ -11,5 +11,6 @@ before_script:
 build:
   stage: build
   script:
-    - cd compose
-    - docker-compose build
+    - docker build -f src/services/apigateway/Dockerfile .
+    - docker build -f src/services/deliveries/Dockerfile .
+    - docker build -f src/services/ordering/Dockerfile .
