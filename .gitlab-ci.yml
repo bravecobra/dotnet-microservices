@@ -12,4 +12,5 @@ before_script:
 build:
   stage: build
   script:
+    - cd compose
     - docker-compose build
