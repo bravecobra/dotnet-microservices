@@ -19,7 +19,8 @@ namespace ServiceDiscovery
                 ServiceDiscoveryAddress = configuration.GetValue<Uri>("ServiceConfig:serviceDiscoveryAddress"),
                 ServiceAddress = configuration.GetValue<Uri>("ServiceConfig:serviceAddress"),
                 ServiceName = configuration.GetValue<string>("ServiceConfig:serviceName"),
-                ServiceId = configuration.GetValue<string>("ServiceConfig:serviceId")
+                ServiceId = configuration.GetValue<string>("ServiceConfig:serviceId"),
+                DataCenter = configuration.GetValue<string>("ServiceConfig:DataCenter")
             };
 
             return serviceConfig;
