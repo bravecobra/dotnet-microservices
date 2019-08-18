@@ -32,14 +32,14 @@
       "DownstreamPathTemplate": "/metrics",
       "DownstreamScheme": "http",
       "ServiceName": "deliveries",
-      "UpstreamPathTemplate": "/api/deliveries/metrics",
+      "UpstreamPathTemplate": "/api/logistics/metrics",
       "UpstreamHttpMethod": [ "Get" ]
     },
     {
       "DownstreamPathTemplate": "/metrics-text",
       "DownstreamScheme": "http",
       "ServiceName": "deliveries",
-      "UpstreamPathTemplate": "/api/deliveries/metrics-text",
+      "UpstreamPathTemplate": "/api/logistics/metrics-text",
       "UpstreamHttpMethod": [ "Get" ]
     },
     {

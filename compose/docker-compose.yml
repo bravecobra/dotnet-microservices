@@ -34,7 +34,7 @@ services:
       microservices: null
   consul:
     image: 'consul:latest'
-    command: consul agent -dev -log-level=warn -ui -client=0.0.0.0
+    command: consul agent -dev -log-level=warn -ui -client=0.0.0.0 -datacenter=dockercompose-dc
     hostname: consul
     container_name: consul
     networks:

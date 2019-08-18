@@ -1,6 +1,6 @@
 ﻿using System;
-using App.Metrics;
 using AutoMapper;
+using ConsulConfiguration;
 using deliveries.Persistence;
 using deliveries.Persistence.Impl;
 using Metrics;
@@ -25,17 +25,19 @@ namespace deliveries
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            ConfigureConsul(services);
+            services.AddConsulServices(Configuration.GetServiceConfig());
+            services.AddConsulConfiguration();
+            services.AddMetricsServices();
+
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSingleton<IDeliveriesRepository, DeliveriesRepository>();
-            services.AddMetricsServices();
             services.AddMvc()
                 .AddMetrics()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime lifetime)
         {
             if (env.IsDevelopment())
             {
@@ -48,15 +50,9 @@ namespace deliveries
             }
 
             //app.UseHttpsRedirection();
+            app.UseConsulConfiguration(lifetime);
             app.UseMetricsServices();
             app.UseMvc();
-        }
-
-        private void ConfigureConsul(IServiceCollection services)
-        {
-            var serviceConfig = Configuration.GetServiceConfig();
-
-            services.AddConsulServices(serviceConfig);
         }
     }
 }

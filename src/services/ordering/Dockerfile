@@ -8,6 +8,9 @@ WORKDIR /build
 COPY ["src/common/infrastructure/ServiceDiscovery/ServiceDiscovery.csproj", "src/common/infrastructure/ServiceDiscovery/"]
 RUN dotnet restore "src/common/infrastructure/ServiceDiscovery/ServiceDiscovery.csproj"
 
+COPY ["src/common/infrastructure/ConsulConfiguration/ConsulConfiguration.csproj", "src/common/infrastructure/ConsulConfiguration/"]
+RUN dotnet restore "src/common/infrastructure/ConsulConfiguration/ConsulConfiguration.csproj"
+
 COPY ["src/common/infrastructure/Metrics/Metrics.csproj", "src/common/infrastructure/Metrics/"]
 RUN dotnet restore "src/common/infrastructure/Metrics/Metrics.csproj"
 

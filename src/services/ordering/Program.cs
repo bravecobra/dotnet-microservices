@@ -1,4 +1,5 @@
-﻿using Metrics;
+﻿using ConsulConfiguration;
+using Metrics;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
@@ -15,6 +16,7 @@ namespace ordering
         {
             return WebHost.CreateDefaultBuilder(args)
                 .ConfigurePrometheusEndpoint()
+                .ConfigureAppConfiguration((context, builder) => builder.ConfigureConsulSettings())
                 .UseStartup<Startup>();
         }
     }

@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{C3
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{7A9A2D27-28B5-4E7E-B9E1-F6CB1AF8A379}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsulConfiguration", "common\infrastructure\ConsulConfiguration\ConsulConfiguration.csproj", "{E805BA9A-623A-43D9-AB79-D3745E7091C1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{0672DB2D-64E0-438A-B641-0B142921BCD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0672DB2D-64E0-438A-B641-0B142921BCD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0672DB2D-64E0-438A-B641-0B142921BCD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E805BA9A-623A-43D9-AB79-D3745E7091C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E805BA9A-623A-43D9-AB79-D3745E7091C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E805BA9A-623A-43D9-AB79-D3745E7091C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E805BA9A-623A-43D9-AB79-D3745E7091C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -59,6 +65,7 @@ Global
 		{D0D51ED2-2288-4588-BF5E-6883BA673140} = {C30FCD83-A085-4EFD-801A-67126A9DE698}
 		{D25BBC84-87C8-48CB-856D-D1357542A24B} = {C30FCD83-A085-4EFD-801A-67126A9DE698}
 		{0672DB2D-64E0-438A-B641-0B142921BCD8} = {7A9A2D27-28B5-4E7E-B9E1-F6CB1AF8A379}
+		{E805BA9A-623A-43D9-AB79-D3745E7091C1} = {7A9A2D27-28B5-4E7E-B9E1-F6CB1AF8A379}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B424887F-C7EF-434D-9E37-0A7F3088D308}

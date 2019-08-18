@@ -1,6 +1,6 @@
 ﻿using System;
-using App.Metrics;
 using AutoMapper;
+using ConsulConfiguration;
 using Metrics;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -25,17 +25,20 @@ namespace ordering
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            ConfigureConsul(services);
+            services.AddConsulServices(Configuration.GetServiceConfig());
+            services.AddConsulConfiguration();
+            services.AddMetricsServices();
+
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSingleton<IOrdersRepository, OrdersRepository>();
-            services.AddMetricsServices();
             services.AddMvc()
                 .AddMetrics()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime lifetime)
         {
             if (env.IsDevelopment())
             {
@@ -48,14 +51,9 @@ namespace ordering
             }
 
             //app.UseHttpsRedirection();
+            app.UseConsulConfiguration(lifetime);
             app.UseMetricsServices();
             app.UseMvc();
-        }
-        private void ConfigureConsul(IServiceCollection services)
-        {
-            var serviceConfig = Configuration.GetServiceConfig();
-
-            services.AddConsulServices(serviceConfig);
         }
     }
 }
