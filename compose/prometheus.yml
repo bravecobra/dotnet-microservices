@@ -10,7 +10,7 @@ scrape_configs:
   - job_name: consul-service
     consul_sd_configs:
       - server: 'consul:8500'
-        datacenter: dc1
+        datacenter: dockercompose-dc
         services: ['ordering', 'deliveries']
 
     relabel_configs:

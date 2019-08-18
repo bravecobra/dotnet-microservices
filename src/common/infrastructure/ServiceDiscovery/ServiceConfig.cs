@@ -8,5 +8,6 @@ namespace ServiceDiscovery
         public Uri ServiceAddress { get; set; }
         public string ServiceName { get; set; }
         public string ServiceId { get; set; }
+        public string DataCenter { get; set; }
     }
 }

@@ -26,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\common\infrastructure\ConsulConfiguration\ConsulConfiguration.csproj" />
     <ProjectReference Include="..\..\common\infrastructure\Metrics\Metrics.csproj" />
     <ProjectReference Include="..\..\common\infrastructure\ServiceDiscovery\ServiceDiscovery.csproj" />
   </ItemGroup>

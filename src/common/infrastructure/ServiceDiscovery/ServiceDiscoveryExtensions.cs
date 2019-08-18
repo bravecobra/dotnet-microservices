@@ -26,6 +26,7 @@ namespace ServiceDiscovery
             return new ConsulClient(config =>
             {
                 config.Address = serviceConfig.ServiceDiscoveryAddress;
+                config.Datacenter = serviceConfig.DataCenter;
             });
         }
     }
