@@ -33,7 +33,7 @@ Task("Clean")
    });
 
 Task("Restore")
-   .IsDependentOn("Clean")   
+   .IsDependentOn("Clean")
    .Does(() => {
       DotNetCoreRestore(solutionFile);
    });
@@ -67,7 +67,7 @@ Task("Test")
                 });
         }
    });
-Task("BuildAndTest")   
+Task("BuildAndTest")
    .IsDependentOn("Clean")
    .IsDependentOn("Restore")
    .IsDependentOn("Build")
