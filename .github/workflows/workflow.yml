@@ -20,6 +20,8 @@ jobs:
       uses: gep13/cake-actions/task@master
       env:
         CAKE_SCRIPT: ./build.cake
+      with:
+        args: Default
     - name: Build the apigateway Docker image
       run: docker build . --file src/services/apigateway/Dockerfile --tag apigateway:$(date +%s)
     - name: Build the deliveries Docker image
