@@ -7,8 +7,10 @@ jobs:
   build:
     name: Run Build on Ubuntu
     runs-on: ubuntu-latest
-    uses: actions/checkout@v1
+    
     steps:
+    - name: Checkout
+      uses: actions/checkout@v1
     - name: Build the apigateway Docker image
       run: docker build . --file src/services/apigateway/Dockerfile --tag apigateway:$(date +%s)
     - name: Build the deliveries Docker image
