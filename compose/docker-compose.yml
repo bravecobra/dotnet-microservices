@@ -34,11 +34,55 @@ services:
       microservices: null
   consul:
     image: 'consul:latest'
-    command: consul agent -dev -log-level=warn -ui -client=0.0.0.0 -datacenter=dockercompose-dc
     hostname: consul
     container_name: consul
     networks:
       microservices: null
+    volumes:
+      - ./_data/consul/data/:/consul/data/
+      - ./consul/config/:/consul/config/
+  vault:
+    container_name: vault
+    hostname: vault
+    image: vault:latest
+    networks:
+      microservices: null
+    links:
+      - 'consul:consul'
+    depends_on:
+      - consul
+    ports:
+      - '8200:8200'
+    volumes:
+      - ./_data/consul/data/:/consul/data/
+      - ./consul/config/:/consul/config/
+      - ./vault/config/:/config
+    cap_add:
+      - IPC_LOCK
+    command: server -config=/config/vault.hcl
+  vault-webui:
+    container_name: vault-webui
+    image: djenriquez/vault-ui
+    hostname: vault-webui
+    ports:
+      - "8000:8000"
+    links:
+      - vault:vault
+    networks:
+      microservices: null
+    environment:
+      NODE_TLS_REJECT_UNAUTHORIZED: 0
+      VAULT_URL_DEFAULT: http://vault:8200
+  consul-backup:
+    container_name: consul-backup
+    build: backup/
+    networks:
+      microservices: null
+    links:
+      - consul:consul
+    volumes:
+      - ./_data/consul/backup:/backup/
+    command: consul-backup
   prometheus:
     image: prom/prometheus
     container_name: prometheus
@@ -60,4 +104,6 @@ volumes:
   prometheus:
     driver: local
   grafana:
+    driver: local
+  consul:
     driver: local

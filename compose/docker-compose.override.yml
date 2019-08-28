@@ -42,6 +42,7 @@ services:
   consul:
     ports:
       - '8500:8500'
+      - '8300:8300'
   prometheus:
     ports:
       - '9090:9090'
