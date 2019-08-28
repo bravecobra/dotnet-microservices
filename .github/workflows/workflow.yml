@@ -10,6 +10,12 @@ jobs:
     
     steps:
     - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 2.2.401
+    - name: Build project in .NET
+      run: dotnet build ./src/dotnet-microservices.sln--configuration Release    
     - name: Build the apigateway Docker image
       run: docker build . --file src/services/apigateway/Dockerfile --tag apigateway:$(date +%s)
     - name: Build the deliveries Docker image
