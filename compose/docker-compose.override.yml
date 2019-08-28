@@ -10,9 +10,6 @@ services:
       - 'ServiceConfig__serviceId=ordering-v1'
     ports:
       - '8001:8001'
-    volumes:
-      - '${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro'
-      - '${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro'
   deliveries:
     environment:
       - 'ASPNETCORE_ENVIRONMENT=Development'
@@ -23,19 +20,16 @@ services:
       - 'ServiceConfig__serviceId=deliveries-v1'
     ports:
       - '8002:8002'
-    volumes:
-      - '${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro'
-      - '${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro'
   api.gateway:
     env_file: environment.env
     environment:
       - 'ASPNETCORE_ENVIRONMENT=Development'
       - 'ASPNETCORE_URLS=https://+'
-      - 'ASPNETCORE_HTTPS_PORT=443' 
+      - 'ASPNETCORE_HTTPS_PORT=443'
       - 'ASPNETCORE_Kestrel__Certificates__Default__Password=crypticpassword'
       - 'ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx'
     volumes:
-      - '${USERPROFILE}\.aspnet\https:/https/'
+      - './.aspnet/https:/https/'
       - './ocelot.json:/app/ocelot.json'
     ports:
       - '443:443'

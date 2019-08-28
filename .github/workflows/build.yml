@@ -29,4 +29,4 @@ jobs:
       run: docker build . --file src/services/ordering/Dockerfile --tag ordering:$(date +%s)
 
     - name: Validate docker-compose
-      run: cd compose && docker-compose config
+      run: cd compose && ./gen-certificate.sh && docker-compose config
