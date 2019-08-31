@@ -37,6 +37,9 @@ services:
     ports:
       - '8500:8500'
       - '8300:8300'
+    volumes:
+      - ./_data/consul/data/:/consul/data/
+      - ./consul/config/:/consul/config/
   prometheus:
     ports:
       - '9090:9090'

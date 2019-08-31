@@ -9,4 +9,5 @@ listener "tcp" {
     #tls_key_file = "/config/server.key"
   	tls_disable = 1
 }
+ui = true
 disable_mlock = true

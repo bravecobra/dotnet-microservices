@@ -38,9 +38,6 @@ services:
     container_name: consul
     networks:
       microservices: null
-    volumes:
-      - ./_data/consul/data/:/consul/data/
-      - ./consul/config/:/consul/config/
   vault:
     container_name: vault
     hostname: vault
