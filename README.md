@@ -1,5 +1,5 @@
 # dotnet-microservices
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 ![GitHub Actions status | bravecobra/dotnet-microservices](https://github.com/bravecobra/dotnet-microservices/workflows/Build/badge.svg)
 [![Gitlab](https://gitlab.com/bravecobra/dotnet-microservices/badges/master/pipeline.svg)](https://gitlab.com/bravecobra/dotnet-microservices/commits/master)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=dotnet-microservices&metric=alert_status)](https://sonarcloud.io/dashboard?id=dotnet-microservices)
