@@ -48,28 +48,6 @@ services:
       - 'consul:consul'
     depends_on:
       - consul
-    ports:
-      - '8200:8200'
-    volumes:
-      - ./_data/consul/data/:/consul/data/
-      - ./consul/config/:/consul/config/
-      - ./vault/config/:/config
-    cap_add:
-      - IPC_LOCK
-    command: server -config=/config/vault.hcl
-  vault-webui:
-    container_name: vault-webui
-    image: djenriquez/vault-ui
-    hostname: vault-webui
-    ports:
-      - "8000:8000"
-    links:
-      - vault:vault
-    networks:
-      microservices: null
-    environment:
-      NODE_TLS_REJECT_UNAUTHORIZED: 0
-      VAULT_URL_DEFAULT: http://vault:8200
   consul-backup:
     container_name: consul-backup
     build: backup/

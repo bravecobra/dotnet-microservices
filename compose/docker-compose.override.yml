@@ -29,7 +29,7 @@ services:
       - 'ASPNETCORE_Kestrel__Certificates__Default__Password=crypticpassword'
       - 'ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx'
     volumes:
-      - './.aspnet/https:/https/'
+      - './_data/apigateway/https:/https/'
       - './ocelot.json:/app/ocelot.json'
     ports:
       - '443:443'
@@ -39,7 +39,15 @@ services:
       - '8300:8300'
     volumes:
       - ./_data/consul/data/:/consul/data/
-      - ./consul/config/:/consul/config/
+      - ./_config/consul/config/:/consul/config/
+  vault:
+    ports:
+      - '8200:8200'
+    volumes:
+      - ./_config/vault/config/:/config
+    cap_add:
+      - IPC_LOCK
+    command: server -config=/config/vault.hcl
   prometheus:
     ports:
       - '9090:9090'
