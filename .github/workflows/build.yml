@@ -5,9 +5,11 @@ on: [push]
 jobs:
 
   build:
-    name: Run Build on Ubuntu
-    runs-on: ubuntu-latest
-
+    name: Run Build on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
     - uses: actions/checkout@v1
 
@@ -28,8 +30,20 @@ jobs:
     - name: Build the ordering Docker image
       run: docker build . --file src/services/ordering/Dockerfile --tag ordering:$(date +%s)
 
-    - name: Validate docker-compose
-      run: cd compose && chmod 0700 ./_scripts/apigateway-gen-certificate.sh && bash ./_scripts/apigateway-gen-certificate.sh && docker-compose config
+    - name: Validate docker-compose on ${{ matrix.os }}
+      if: matrix.os == 'ubuntu-latest'
+      run: |
+        cd compose
+        chmod 0700 ./_scripts/apigateway-gen-certificate.sh
+        bash ./_scripts/apigateway-gen-certificate.sh
+        docker-compose config
+
+    - name: Validate docker-compose on ${{ matrix.os }}
+      if: matrix.os == 'windows-latest'
+      run: |
+        cd compose
+        ./_scripts/apigateway-gen-certificate.ps1
+        docker-compose config
 
   sonarCloud:
     name: SonarCloud
