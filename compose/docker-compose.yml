@@ -34,11 +34,30 @@ services:
       microservices: null
   consul:
     image: 'consul:latest'
-    command: consul agent -dev -log-level=warn -ui -client=0.0.0.0 -datacenter=dockercompose-dc
     hostname: consul
     container_name: consul
     networks:
       microservices: null
+  vault:
+    container_name: vault
+    hostname: vault
+    image: vault:latest
+    networks:
+      microservices: null
+    links:
+      - 'consul:consul'
+    depends_on:
+      - consul
+  consul-backup:
+    container_name: consul-backup
+    build: backup/
+    networks:
+      microservices: null
+    links:
+      - consul:consul
+    volumes:
+      - ./_data/consul/backup:/backup/
+    command: consul-backup
   prometheus:
     image: prom/prometheus
     container_name: prometheus
@@ -60,4 +79,6 @@ volumes:
   prometheus:
     driver: local
   grafana:
+    driver: local
+  consul:
     driver: local

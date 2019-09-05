@@ -29,7 +29,7 @@ jobs:
       run: docker build . --file src/services/ordering/Dockerfile --tag ordering:$(date +%s)
 
     - name: Validate docker-compose
-      run: cd compose && chmod 0700 ./gen-certificate.sh && bash ./gen-certificate.sh && docker-compose config
+      run: cd compose && chmod 0700 ./_scripts/apigateway-gen-certificate.sh && bash ./_scripts/apigateway-gen-certificate.sh && docker-compose config
 
   sonarCloud:
     name: SonarCloud
