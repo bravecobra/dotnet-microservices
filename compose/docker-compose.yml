@@ -50,7 +50,9 @@ services:
       - consul
   consul-backup:
     container_name: consul-backup
-    build: backup/
+    build:
+      context: ..
+      dockerfile: backup/Dockerfile
     networks:
       microservices: null
     links:
