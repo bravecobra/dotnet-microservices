@@ -44,10 +44,10 @@ services:
     networks:
       microservices: null
 
-  consul-worker:
+  consul-agent:
     image: 'consul:latest'
-    hostname: consul-worker
-    container_name: consul-worker
+    hostname: consul-agent
+    container_name: consul-agent
     command: agent -join consul -config-dir=/consul/config -bind '{{ GetPrivateInterfaces | attr "address" }}' -client '{{ GetPrivateInterfaces | attr "address" }}'
     networks:
       microservices: null

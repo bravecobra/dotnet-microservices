@@ -43,7 +43,7 @@ services:
       - ./_data/consul/data/:/consul/data/
       - ./_config/consul/config/:/consul/config/
 
-  consul-worker:
+  consul-agent:
     ports:
       - '18500:8500'
     volumes:
