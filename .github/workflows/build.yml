@@ -25,7 +25,9 @@ jobs:
       env:
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
         DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
-      run: dotnet build ./src/dotnet-microservices.sln --configuration Release
+      run: |
+        dotnet --version
+        dotnet build ./src/dotnet-microservices.sln --configuration Release
 
     - name: Build the apigateway Docker image
       run: docker build . --file src/services/apigateway/Dockerfile --tag apigateway:${{ matrix.os }}-${{ github.sha }}
@@ -39,6 +41,8 @@ jobs:
     - name: Validate docker-compose-ubuntu
       if: matrix.os == 'ubuntu-latest'
       run: |
+        docker --version
+        docker-compose --version
         cd compose
         chmod 0700 ./_scripts/apigateway-gen-certificate.sh
         bash ./_scripts/apigateway-gen-certificate.sh
@@ -47,6 +51,8 @@ jobs:
     - name: Validate docker-compose-windows
       if: matrix.os == 'windows-latest'
       run: |
+        docker --version
+        docker-compose --version
         cd compose
         powershell .\_scripts\apigateway-gen-certificate.ps1
         docker-compose config
