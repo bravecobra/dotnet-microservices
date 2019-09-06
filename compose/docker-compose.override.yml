@@ -10,6 +10,7 @@ services:
       - 'ServiceConfig__serviceId=ordering-v1'
     ports:
       - '8001:8001'
+
   deliveries:
     environment:
       - 'ASPNETCORE_ENVIRONMENT=Development'
@@ -20,6 +21,7 @@ services:
       - 'ServiceConfig__serviceId=deliveries-v1'
     ports:
       - '8002:8002'
+
   api.gateway:
     env_file: environment.env
     environment:
@@ -33,13 +35,20 @@ services:
       - './ocelot.json:/app/ocelot.json'
     ports:
       - '443:443'
+
   consul:
     ports:
       - '8500:8500'
-      - '8300:8300'
     volumes:
       - ./_data/consul/data/:/consul/data/
       - ./_config/consul/config/:/consul/config/
+
+  consul-worker:
+    ports:
+      - '18500:8500'
+    volumes:
+      - ./_config/consul/config/:/consul/config/
+
   vault:
     ports:
       - '8200:8200'
@@ -48,12 +57,14 @@ services:
     cap_add:
       - IPC_LOCK
     command: server -config=/config/vault.hcl
+
   prometheus:
     ports:
       - '9090:9090'
     volumes:
       - 'prometheus:/prometheus'
       - './prometheus.yml:/etc/prometheus/prometheus.yml'
+
   grafana:
     environment:
       - 'GF_INSTALL_PLUGINS=grafana-piechart-panel'
@@ -61,6 +72,7 @@ services:
       - '3000:3000'
     volumes:
       - 'grafana:/var/lib/grafana'
+
 volumes:
   prometheus:
     driver: local
