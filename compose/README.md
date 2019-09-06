@@ -4,11 +4,12 @@
 
 ### First time setup
 
-We first want to start the `docker-compose` environment. To do so, cd into the compose directory, generate the certificate for the `apigateway`, start `docker-compose`, then call the init script to initialize `vault` and seed it.
+We first want to start the `docker-compose` environment. To do so, cd into the compose directory, generate the certificate for the `apigateway`,on windows/macos trust the certificate, start `docker-compose`, then call the init script to initialize `vault` and seed it.
 
 ```powershell
 cd compose
 .\_scripts\apigateway-gen-certificate.ps1
+dotnet dev-certs https --trust
 docker-compose -d up
 .\_scripts\init.ps1
 ```
