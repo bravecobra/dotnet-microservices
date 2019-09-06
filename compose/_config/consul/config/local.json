@@ -2,7 +2,5 @@
     "log_level": "DEBUG",
     "server": true,
     "ui": true,
-    "bootstrap": true,
-    "client_addr":"0.0.0.0",
     "datacenter": "dockercompose-dc"
 }
