@@ -68,7 +68,7 @@ services:
   consul-backup:
     container_name: consul-backup
     build:
-      context: ..
+      context: .
       dockerfile: backup/Dockerfile
     networks:
       microservices: null
@@ -81,6 +81,17 @@ services:
   prometheus:
     image: prom/prometheus
     container_name: prometheus
+    depends_on:
+      - consul
+    networks:
+      microservices: null
+
+  prometheus-sidecar:
+    image: 'consul-envoy:latest'
+    build:
+      context: .
+      dockerfile: consul-envoy/Dockerfile
+    command: -sidecar-for prometheus -grpc-addr=consul:8502 -http-addr=consul:8500  -- -l debug
     depends_on:
       - consul
     networks:

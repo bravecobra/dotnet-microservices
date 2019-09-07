@@ -47,7 +47,7 @@ services:
     ports:
       - '18500:8500'
     volumes:
-      - ./_config/consul/config/:/consul/config/
+      - ./_config/consul-agent/config/:/consul/config/
 
   vault:
     ports:
@@ -59,11 +59,15 @@ services:
     command: server -config=/config/vault.hcl
 
   prometheus:
-    ports:
-      - '9090:9090'
     volumes:
       - 'prometheus:/prometheus'
       - './prometheus.yml:/etc/prometheus/prometheus.yml'
+
+  prometheus-sidecar:
+    ports:
+      - '9090:9090'
+    environment:
+      - CONSUL_HTTP_ADDR=consul:8500
 
   grafana:
     environment:
