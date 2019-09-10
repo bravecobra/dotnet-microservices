@@ -6,9 +6,10 @@ services:
       context: ..
       dockerfile: src/services/ordering/Dockerfile
     container_name: ordering
-    hostname: ordering.microservices
+    hostname: ordering.docker
     networks:
-      microservices: null
+      microservices:
+        ipv4_address: 10.0.0.3
     dns:
       - 10.0.0.10
   ordering_envoy:
@@ -36,24 +37,46 @@ services:
       context: ..
       dockerfile: src/services/deliveries/Dockerfile
     container_name: deliveries
-    hostname: deliveries.microservices
+    hostname: deliveries.docker
     depends_on:
       - consul
     networks:
-      microservices: null
+      microservices:
+        ipv4_address: 10.0.0.4
+  deliveries_envoy:
+    image: 'nicholasjackson/consul-envoy:v1.6.0-v0.10.0'
+    environment:
+      CONSUL_HTTP_ADDR: 'consul:8500'
+      CONSUL_GRPC_ADDR: 'consul:8502'
+      SERVICE_CONFIG: /config/deliveries.json
+      CENTRAL_CONFIG: /central_config/deliveries-defaults.hcl
+    volumes:
+      - './_config/service_config:/config'
+      - './_config/central_config:/central_config'
+    command:
+      - consul
+      - connect
+      - envoy
+      - '-sidecar-for'
+      - deliveries-v1
+    depends_on:
+      - consul
+    network_mode: 'service:deliveries'
   api.gateway:
     image: 'apigateway:latest'
     build:
       context: ..
       dockerfile: src/services/apigateway/Dockerfile
     container_name: apigateway
-    hostname: apigateway.microservices
+    hostname: apigateway.docker
     depends_on:
       - consul
       - ordering
       - deliveries
     networks:
       microservices: null
+    dns:
+      - 10.0.0.10
   consul:
     image: 'consul:latest'
     hostname: consul
@@ -114,7 +137,7 @@ services:
   dps:
     image: defreitas/dns-proxy-server
     volumes:
-      - //var/run/docker.sock:/var/run/docker.sock
+      - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - MG_LOG_LEVEL=ERROR
       - MG_REGISTER_CONTAINER_NAMES=1

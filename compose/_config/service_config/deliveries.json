@@ -1,11 +1,11 @@
 {
   "service": {
-    "name": "ordering",
-    "id":"ordering-v1",
-    "port": 8001,
-    "address":"10.0.0.3",
+    "name": "deliveries",
+    "id":"deliveries-v1",
+    "port": 8002,
+    "address":"10.0.0.4",
     "tags":[
-      "ordering"
+      "deliveries"
     ],
     "connect": {
       "sidecar_service": {
@@ -13,12 +13,12 @@
         "checks": [
           {
           "name": "Connect Envoy Sidecar",
-          "tcp": "10.0.0.3:20000",
+          "tcp": "10.0.0.4:20000",
           "interval": "10s"
           },
           {
           "name": "Connect Sidecar Aliasing web",
-          "alias_service": "ordering"
+          "alias_service": "deliveries"
           }
         ]
       }

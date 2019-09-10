@@ -9,7 +9,7 @@ services:
       - ServiceConfig__serviceName=ordering
       - ServiceConfig__serviceId=ordering-v1
     ports:
-      - '8001:8001'
+      - '8001'
   deliveries:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -19,7 +19,7 @@ services:
       - ServiceConfig__serviceName=deliveries
       - ServiceConfig__serviceId=deliveries-v1
     ports:
-      - '8002:8002'
+      - '8002'
   api.gateway:
     env_file: environment.env
     environment:
@@ -56,6 +56,8 @@ services:
     volumes:
       - 'prometheus:/prometheus'
       - './prometheus.yml:/etc/prometheus/prometheus.yml'
+    ports:
+      - '9090:9090'
   grafana:
     environment:
       - GF_INSTALL_PLUGINS=grafana-piechart-panel

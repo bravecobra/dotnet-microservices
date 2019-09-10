@@ -25,8 +25,8 @@ namespace deliveries
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddConsulServices(Configuration.GetServiceConfig());
-            services.AddConsulConfiguration();
+            //services.AddConsulServices(Configuration.GetServiceConfig());
+            //services.AddConsulConfiguration();
             services.AddMetricsServices();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -50,7 +50,7 @@ namespace deliveries
             }
 
             //app.UseHttpsRedirection();
-            app.UseConsulConfiguration(lifetime);
+            //app.UseConsulConfiguration(lifetime);
             app.UseMetricsServices();
             app.UseMvc();
         }
