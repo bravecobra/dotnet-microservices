@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using App.Metrics;
 using App.Metrics.AspNetCore;
 using App.Metrics.Formatters.Prometheus;
@@ -17,7 +14,6 @@ namespace Metrics
         {
             Metrics = AppMetrics.CreateDefaultBuilder()
                 .OutputMetrics.AsPrometheusPlainText()
-                //.OutputMetrics.AsPrometheusProtobuf()
                 .Build();
             return builder.ConfigureMetrics(Metrics)
                 .UseMetrics(
@@ -25,9 +21,10 @@ namespace Metrics
                     {
                         options.EndpointOptions = endpointsOptions =>
                         {
-                            endpointsOptions.MetricsTextEndpointOutputFormatter = Metrics.OutputMetricsFormatters
-                                .OfType<MetricsPrometheusTextOutputFormatter>().First();
-                            //endpointsOptions.MetricsEndpointOutputFormatter = Metrics.OutputMetricsFormatters.OfType<MetricsPrometheusProtobufOutputFormatter>().First();
+                            endpointsOptions.MetricsTextEndpointOutputFormatter = Metrics
+                                .OutputMetricsFormatters
+                                .OfType<MetricsPrometheusTextOutputFormatter>()
+                                .First();
                         };
                     });
         }

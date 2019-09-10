@@ -1,0 +1,23 @@
+{
+  "service": {
+    "name": "ordering",
+    "id":"ordering-v1",
+    "port": 8001,
+    "connect": {
+      "sidecar_service": {
+        "port": 20000,
+        "checks": [
+          {
+          "name": "Connect Envoy Sidecar",
+          "tcp": "ordering.docker:20000",
+          "interval": "10s"
+          },
+          {
+          "name": "Connect Sidecar Aliasing web",
+          "alias_service": "ordering"
+          }
+        ]
+      }
+    }
+  }
+}
