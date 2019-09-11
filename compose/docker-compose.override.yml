@@ -16,19 +16,6 @@ services:
       - 'ServiceConfig__serviceAddress=http://deliveries:8002'
       - ServiceConfig__serviceName=deliveries
       - ServiceConfig__serviceId=deliveries-v1
-  api.gateway:
-    env_file: environment.env
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - 'ASPNETCORE_URLS=https://+'
-      - ASPNETCORE_HTTPS_PORT=443
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=crypticpassword
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
-    volumes:
-      - './_data/apigateway/https:/https/'
-      - './ocelot.json:/app/ocelot.json'
-    ports:
-      - '443:443'
   consul:
     ports:
       - '8500:8500'
