@@ -386,3 +386,4 @@ $RECYCLE.BIN/
 
 compose/_data/
 compose/_config/fabio/ssl/
+compose/_scripts/mkcert.exe
