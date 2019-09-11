@@ -6,7 +6,7 @@
     "address":"10.0.0.3",
     "checks": [
       {
-        "id": "api",
+        "id": "ordering-api",
         "name": "HTTP API on port 8001",
         "http": "http://10.0.0.3:8001/health",
         "interval": "10s"
@@ -14,7 +14,7 @@
     ],
     "tags":[
       "ordering",
-      "urlprefix-/ordering strip=/ordering"
+      "urlprefix-/ordering/ strip=/ordering"
     ],
     "connect": {
       "sidecar_service": {

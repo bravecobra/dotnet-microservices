@@ -6,11 +6,11 @@
     "address":"10.0.0.4",
     "tags":[
       "deliveries",
-      "urlprefix-/deliveries strip=/deliveries"
+      "urlprefix-/deliveries/ strip=/deliveries"
     ],
     "checks": [
       {
-        "id": "api",
+        "id": "deliveries-api",
         "name": "HTTP API on port 8002",
         "http": "http://10.0.0.4:8002/health",
         "interval": "10s"
