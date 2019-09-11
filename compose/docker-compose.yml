@@ -62,21 +62,17 @@ services:
     depends_on:
       - consul
     network_mode: 'service:deliveries'
-  api.gateway:
-    image: 'apigateway:latest'
-    build:
-      context: ..
-      dockerfile: src/services/apigateway/Dockerfile
-    container_name: apigateway
-    hostname: apigateway.docker
-    depends_on:
-      - consul
-      - ordering
-      - deliveries
-    networks:
-      microservices: null
+  fabio:
+    image: 'fabiolb/fabio'
+    ports:
+      - '443:443'
+      - '9998:9998'
+    volumes:
+      - ./_config/fabio:/etc/fabio
     dns:
       - 10.0.0.10
+    networks:
+      microservices: null
   consul:
     image: 'consul:latest'
     hostname: consul

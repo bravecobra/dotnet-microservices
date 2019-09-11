@@ -8,8 +8,6 @@ services:
       - 'ServiceConfig__serviceAddress=http://ordering:8001'
       - ServiceConfig__serviceName=ordering
       - ServiceConfig__serviceId=ordering-v1
-    ports:
-      - '8001'
   deliveries:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -18,8 +16,6 @@ services:
       - 'ServiceConfig__serviceAddress=http://deliveries:8002'
       - ServiceConfig__serviceName=deliveries
       - ServiceConfig__serviceId=deliveries-v1
-    ports:
-      - '8002'
   api.gateway:
     env_file: environment.env
     environment:

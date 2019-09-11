@@ -28,7 +28,7 @@ namespace deliveries
             //services.AddConsulServices(Configuration.GetServiceConfig());
             //services.AddConsulConfiguration();
             services.AddMetricsServices();
-
+            services.AddHealthChecks();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSingleton<IDeliveriesRepository, DeliveriesRepository>();
             services.AddMvc()
@@ -51,6 +51,7 @@ namespace deliveries
 
             //app.UseHttpsRedirection();
             //app.UseConsulConfiguration(lifetime);
+            app.UseHealthChecks("/health");
             app.UseMetricsServices();
             app.UseMvc();
         }

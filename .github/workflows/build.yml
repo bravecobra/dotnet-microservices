@@ -29,9 +29,6 @@ jobs:
         dotnet --version
         dotnet build ./src/dotnet-microservices.sln --configuration Release
 
-    - name: Build the apigateway Docker image
-      run: docker build . --file src/services/apigateway/Dockerfile --tag apigateway:${{ matrix.os }}-${{ github.sha }}
-
     - name: Build the deliveries Docker image
       run: docker build . --file src/services/deliveries/Dockerfile --tag deliveries:${{ matrix.os }}-${{ github.sha }}
 

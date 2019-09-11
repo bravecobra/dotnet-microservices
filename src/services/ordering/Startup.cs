@@ -28,7 +28,7 @@ namespace ordering
 //            services.AddConsulServices(Configuration.GetServiceConfig());
 //            services.AddConsulConfiguration();
             services.AddMetricsServices();
-
+            services.AddHealthChecks();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSingleton<IOrdersRepository, OrdersRepository>();
             services.AddMvc()
@@ -52,6 +52,7 @@ namespace ordering
 
             //app.UseHttpsRedirection();
             //app.UseConsulConfiguration(lifetime);
+            app.UseHealthChecks("/health");
             app.UseMetricsServices();
             app.UseMvc();
         }

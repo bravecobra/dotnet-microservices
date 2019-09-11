@@ -1,8 +1,8 @@
 log_level = "DEBUG"
 datacenter=  "dockercompose-dc"
-server = true
+server = false
 
-bootstrap_expect = 1
+bootstrap_expect = 0
 ui = true
 
 connect {

@@ -1,9 +1,0 @@
-{
-    "log_level": "DEBUG",
-    "server": false,
-    "ui": false,
-    "datacenter": "dockercompose-dc",
-    "ports": {
-        "grpc": 8502
-    }
-}
