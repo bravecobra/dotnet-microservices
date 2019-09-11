@@ -1,6 +1,0 @@
-{
-    "log_level": "DEBUG",
-    "server": true,
-    "ui": true,
-    "datacenter": "dockercompose-dc"
-}

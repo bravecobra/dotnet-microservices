@@ -2,77 +2,52 @@ version: '3.5'
 services:
   ordering:
     environment:
-      - 'ASPNETCORE_ENVIRONMENT=Development'
+      - ASPNETCORE_ENVIRONMENT=Development
       - 'ASPNETCORE_URLS=http://+:8001'
       - 'ServiceConfig__serviceDiscoveryAddress=http://consul:8500'
       - 'ServiceConfig__serviceAddress=http://ordering:8001'
-      - 'ServiceConfig__serviceName=ordering'
-      - 'ServiceConfig__serviceId=ordering-v1'
-    ports:
-      - '8001:8001'
-
+      - ServiceConfig__serviceName=ordering
+      - ServiceConfig__serviceId=ordering-v1
   deliveries:
     environment:
-      - 'ASPNETCORE_ENVIRONMENT=Development'
+      - ASPNETCORE_ENVIRONMENT=Development
       - 'ASPNETCORE_URLS=http://+:8002'
       - 'ServiceConfig__serviceDiscoveryAddress=http://consul:8500'
       - 'ServiceConfig__serviceAddress=http://deliveries:8002'
-      - 'ServiceConfig__serviceName=deliveries'
-      - 'ServiceConfig__serviceId=deliveries-v1'
-    ports:
-      - '8002:8002'
-
-  api.gateway:
-    env_file: environment.env
-    environment:
-      - 'ASPNETCORE_ENVIRONMENT=Development'
-      - 'ASPNETCORE_URLS=https://+'
-      - 'ASPNETCORE_HTTPS_PORT=443'
-      - 'ASPNETCORE_Kestrel__Certificates__Default__Password=crypticpassword'
-      - 'ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx'
-    volumes:
-      - './_data/apigateway/https:/https/'
-      - './ocelot.json:/app/ocelot.json'
-    ports:
-      - '443:443'
-
+      - ServiceConfig__serviceName=deliveries
+      - ServiceConfig__serviceId=deliveries-v1
   consul:
     ports:
       - '8500:8500'
     volumes:
-      - ./_data/consul/data/:/consul/data/
-      - ./_config/consul/config/:/consul/config/
-
+      - './_data/consul/data/:/consul/data/'
+      - './_config/consul/config/:/consul/config/'
   consul-agent:
     ports:
       - '18500:8500'
     volumes:
-      - ./_config/consul/config/:/consul/config/
-
+      - './_config/consul-agent/config/:/consul/config/'
   vault:
     ports:
       - '8200:8200'
     volumes:
-      - ./_config/vault/config/:/config
+      - './_config/vault/config/:/config'
     cap_add:
       - IPC_LOCK
     command: server -config=/config/vault.hcl
-
   prometheus:
-    ports:
-      - '9090:9090'
     volumes:
       - 'prometheus:/prometheus'
       - './prometheus.yml:/etc/prometheus/prometheus.yml'
-
+    ports:
+      - '9090:9090'
   grafana:
     environment:
-      - 'GF_INSTALL_PLUGINS=grafana-piechart-panel'
+      - GF_INSTALL_PLUGINS=grafana-piechart-panel
     ports:
       - '3000:3000'
     volumes:
       - 'grafana:/var/lib/grafana'
-
 volumes:
   prometheus:
     driver: local

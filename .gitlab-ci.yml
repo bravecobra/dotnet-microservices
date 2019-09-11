@@ -6,11 +6,10 @@ services:
 before_script:
   - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
   - docker version
-  - docker-compose version  
-  
+  - docker-compose version
+
 build:
   stage: build
   script:
-    - docker build -f src/services/apigateway/Dockerfile .
     - docker build -f src/services/deliveries/Dockerfile .
     - docker build -f src/services/ordering/Dockerfile .

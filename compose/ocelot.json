@@ -48,7 +48,7 @@
       "ServiceName": "deliveries",
       "UpstreamPathTemplate": "/api/logistics/env",
       "UpstreamHttpMethod": [ "Get" ]
-    },    
+    },
     {
       "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",

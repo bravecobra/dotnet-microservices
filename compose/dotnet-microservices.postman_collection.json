@@ -14,14 +14,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost/api/ordering/orders/737b04c6-0c26-4bfd-96e6-a3fef6b4daf2",
+							"raw": "https://localhost/ordering/api/orders/737b04c6-0c26-4bfd-96e6-a3fef6b4daf2",
 							"protocol": "https",
 							"host": [
 								"localhost"
 							],
 							"path": [
-								"api",
 								"ordering",
+								"api",
 								"orders",
 								"737b04c6-0c26-4bfd-96e6-a3fef6b4daf2"
 							]
@@ -33,15 +33,20 @@
 					"name": "ordering env",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Trace",
+								"value": "abc",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "https://localhost/api/ordering/env",
+							"raw": "https://localhost/ordering/env",
 							"protocol": "https",
 							"host": [
 								"localhost"
 							],
 							"path": [
-								"api",
 								"ordering",
 								"env"
 							]
@@ -55,13 +60,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost/api/ordering/metrics-text",
+							"raw": "https://localhost/ordering/metrics-text",
 							"protocol": "https",
 							"host": [
 								"localhost"
 							],
 							"path": [
-								"api",
 								"ordering",
 								"metrics-text"
 							]
@@ -80,14 +84,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost/api/logistics/orders/737b04c6-0c26-4bfd-96e6-a3fef6b4daf2/deliveries",
+							"raw": "https://localhost/deliveries/api/orders/737b04c6-0c26-4bfd-96e6-a3fef6b4daf2/deliveries",
 							"protocol": "https",
 							"host": [
 								"localhost"
 							],
 							"path": [
+								"deliveries",
 								"api",
-								"logistics",
 								"orders",
 								"737b04c6-0c26-4bfd-96e6-a3fef6b4daf2",
 								"deliveries"
@@ -102,14 +106,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost/api/logistics/metrics-text",
+							"raw": "https://localhost/deliveries/metrics-text",
 							"protocol": "https",
 							"host": [
 								"localhost"
 							],
 							"path": [
-								"api",
-								"logistics",
+								"deliveries",
 								"metrics-text"
 							]
 						}
@@ -122,14 +125,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost/api/logistics/env",
+							"raw": "https://localhost/deliveries/env",
 							"protocol": "https",
 							"host": [
 								"localhost"
 							],
 							"path": [
-								"api",
-								"logistics",
+								"deliveries",
 								"env"
 							]
 						}
