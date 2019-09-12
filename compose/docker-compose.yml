@@ -104,6 +104,8 @@ services:
     ports:
       - '443:443'
       - '9998:9998'
+    depends_on:
+      - consul
     volumes:
       - ./_config/fabio:/etc/fabio
     dns:
