@@ -7,6 +7,8 @@ services:
       dockerfile: src/services/ordering/Dockerfile
     container_name: ordering
     hostname: ordering.docker
+    depends_on:
+      - consul
     networks:
       microservices:
         ipv4_address: 10.0.0.3
@@ -62,6 +64,41 @@ services:
     depends_on:
       - consul
     network_mode: 'service:deliveries'
+  seq:
+    image: datalust/seq:latest
+    container_name: seq
+    hostname: seq.docker
+    environment:
+      - ACCEPT_EULA=Y
+    volumes:
+      - './_data/seq/data:/data'
+    ports:
+      - "8080:80"
+      - "5341"
+    dns:
+      - 10.0.0.10
+    networks:
+      microservices:
+        ipv4_address: 10.0.0.15
+  seq_envoy:
+    image: 'nicholasjackson/consul-envoy:v1.6.0-v0.10.0'
+    environment:
+      CONSUL_HTTP_ADDR: 'consul:8500'
+      CONSUL_GRPC_ADDR: 'consul:8502'
+      SERVICE_CONFIG: /config/seq.json
+      CENTRAL_CONFIG: /central_config/seq-defaults.hcl
+    volumes:
+      - './_config/service_config:/config'
+      - './_config/central_config:/central_config'
+    command:
+      - consul
+      - connect
+      - envoy
+      - '-sidecar-for'
+      - seq-v1
+    depends_on:
+      - consul
+    network_mode: 'service:seq'
   fabio:
     image: 'fabiolb/fabio'
     ports:
