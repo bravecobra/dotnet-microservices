@@ -32,7 +32,16 @@
         ],
         "tags":[
           "deliveries"
-        ]
+        ],
+        "proxy": {
+          "upstreams": [
+            {
+              "destination_name": "seq",
+              "local_bind_address": "127.0.0.1",
+              "local_bind_port": 5341
+            }
+          ]
+        }
       }
     }
   }
