@@ -54,7 +54,7 @@ jobs:
         docker --version
         docker-compose --version
         cd compose
-        powershell .\_scripts\apigateway-gen-certificate.ps1
+        #powershell .\_scripts\apigateway-gen-certificate.ps1
         docker-compose config
 
   sonarCloud:
