@@ -23,8 +23,15 @@ scrape_configs:
       separator: ':'
       regex: '(.*)'
       target_label: '__metrics_path__'
-      replacement: '/metrics-text'      
+      replacement: '/metrics-text'
     # - source_labels: ['__meta_consul_service']
     #   regex:         '(.*)'
     #   target_label:  'job'
     #   replacement:   '$1'
+
+  - job_name: 'consul'
+    metrics_path: /v1/agent/metrics
+    params:
+      format: ['prometheus']
+    static_configs:
+      - targets: ['consul:8500', 'consul-agent:8500']

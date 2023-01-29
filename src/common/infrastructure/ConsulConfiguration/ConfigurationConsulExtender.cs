@@ -16,25 +16,22 @@ namespace ConsulConfiguration
             _configuration = _configurationBuilder.Build();
         }
 
-        public void AddConfigToConsul(string key,  CancellationTokenSource consulCancellationTokenSource)
+        public void AddConfigToConsul(string key)
         {
             _configurationBuilder.AddConsul(
                 $"{_configuration["ASPNETCORE_ENVIRONMENT"]}/{_configuration["ServiceConfig:serviceName"]}/{key}",
-                consulCancellationTokenSource.Token,
-                ConsulClientOptions
+                source => {
+                    source.ConsulConfigurationOptions = config =>
+                    {
+                        config.Address = new Uri(_configuration["ServiceConfig:serviceDiscoveryAddress"]);
+                        config.Datacenter = _configuration["ServiceConfig:DataCenter"];
+                        //config.Token = "";
+                    };
+                    source.ReloadOnChange = true;
+                    source.Optional = true;
+                }
+                
             );
-        }
-
-        private void ConsulClientOptions(IConsulConfigurationSource source)
-        {
-            source.ConsulConfigurationOptions = config =>
-            {
-                config.Address = new Uri(_configuration["ServiceConfig:serviceDiscoveryAddress"]);
-                config.Datacenter = _configuration["ServiceConfig:DataCenter"];
-                //config.Token = "";
-            };
-            source.ReloadOnChange = true;
-            source.Optional = true;
         }
     }
 }

@@ -1,6 +1,4 @@
 ﻿using System;
-using AutoMapper;
-using ConsulConfiguration;
 using deliveries.Persistence;
 using deliveries.Persistence.Impl;
 using Metrics;
@@ -9,7 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ServiceDiscovery;
+using Microsoft.Extensions.Hosting;
 
 namespace deliveries
 {
@@ -25,19 +23,18 @@ namespace deliveries
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddConsulServices(Configuration.GetServiceConfig());
-            services.AddConsulConfiguration();
+            //services.AddConsulServices(Configuration.GetServiceConfig());
+            //services.AddConsulConfiguration();
             services.AddMetricsServices();
-
+            services.AddHealthChecks();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSingleton<IDeliveriesRepository, DeliveriesRepository>();
-            services.AddMvc()
-                .AddMetrics()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc(options => options.EnableEndpointRouting = false)
+                .AddMetrics();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime lifetime)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -50,7 +47,8 @@ namespace deliveries
             }
 
             //app.UseHttpsRedirection();
-            app.UseConsulConfiguration(lifetime);
+            //app.UseConsulConfiguration(lifetime);
+            app.UseHealthChecks("/health");
             app.UseMetricsServices();
             app.UseMvc();
         }

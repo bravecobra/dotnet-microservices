@@ -1,0 +1,48 @@
+{
+  "service": {
+    "name": "ordering",
+    "id":"ordering-v1",
+    "port": 8001,
+    "address":"10.0.0.3",
+    "tags":[
+      "ordering",
+      "urlprefix-/ordering/ strip=/ordering"
+    ],
+    "checks": [
+      {
+        "id": "ordering-api",
+        "name": "HTTP API on port 8001",
+        "http": "http://10.0.0.3:8001/health",
+        "interval": "10s"
+      }
+    ],
+    "connect": {
+      "sidecar_service": {
+        "port": 20000,
+        "checks": [
+          {
+          "name": "Connect Envoy Sidecar",
+          "tcp": "10.0.0.3:20000",
+          "interval": "10s"
+          },
+          {
+          "name": "Connect Sidecar Aliasing ordering",
+          "alias_service": "ordering"
+          }
+        ],
+        "tags":[
+          "ordering"
+        ],
+        "proxy": {
+          "upstreams": [
+            {
+              "destination_name": "seq",
+              "local_bind_address": "127.0.0.1",
+              "local_bind_port": 5341
+            }
+          ]
+        }
+      }
+    }
+  }
+}

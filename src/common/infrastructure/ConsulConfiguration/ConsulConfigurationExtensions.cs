@@ -12,7 +12,7 @@ namespace ConsulConfiguration
 
         public static void ConfigureConsulSettings(this IConfigurationBuilder configurationBuilder, string key = "configuration")
         {
-            new ConfigurationConsulExtender(configurationBuilder).AddConfigToConsul(key, ConsulCancellationTokenSource);
+            new ConfigurationConsulExtender(configurationBuilder).AddConfigToConsul(key);
         }
 
         public static IServiceCollection AddConsulConfiguration(this IServiceCollection services)

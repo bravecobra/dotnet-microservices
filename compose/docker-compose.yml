@@ -6,39 +6,144 @@ services:
       context: ..
       dockerfile: src/services/ordering/Dockerfile
     container_name: ordering
+    hostname: ordering.docker
     depends_on:
       - consul
     networks:
-      microservices: null
+      microservices:
+        ipv4_address: 10.0.0.3
+    dns:
+      - 10.0.0.10
+  ordering_envoy:
+    image: 'nicholasjackson/consul-envoy:v1.6.2-v0.10.0'
+    environment:
+      CONSUL_HTTP_ADDR: 'consul:8500'
+      CONSUL_GRPC_ADDR: 'consul:8502'
+      SERVICE_CONFIG: /config/ordering.json
+      CENTRAL_CONFIG: /central_config/ordering-defaults.hcl
+    volumes:
+      - './_config/service_config:/config'
+      - './_config/central_config:/central_config'
+    command:
+      - consul
+      - connect
+      - envoy
+      - '-sidecar-for'
+      - ordering-v1
+    depends_on:
+      - consul
+    network_mode: 'service:ordering'
   deliveries:
     image: 'deliveries:latest'
     build:
       context: ..
       dockerfile: src/services/deliveries/Dockerfile
     container_name: deliveries
+    hostname: deliveries.docker
     depends_on:
       - consul
     networks:
-      microservices: null
-  api.gateway:
-    image: 'apigateway:latest'
-    build:
-      context: ..
-      dockerfile: src/services/apigateway/Dockerfile
-    container_name: apigateway
+      microservices:
+        ipv4_address: 10.0.0.4
+  deliveries_envoy:
+    image: 'nicholasjackson/consul-envoy:v1.6.2-v0.10.0'
+    environment:
+      CONSUL_HTTP_ADDR: 'consul:8500'
+      CONSUL_GRPC_ADDR: 'consul:8502'
+      SERVICE_CONFIG: /config/deliveries.json
+      CENTRAL_CONFIG: /central_config/deliveries-defaults.hcl
+    volumes:
+      - './_config/service_config:/config'
+      - './_config/central_config:/central_config'
+    command:
+      - consul
+      - connect
+      - envoy
+      - '-sidecar-for'
+      - deliveries-v1
     depends_on:
       - consul
-      - ordering
-      - deliveries
+    network_mode: 'service:deliveries'
+  seq:
+    image: datalust/seq:latest
+    container_name: seq
+    hostname: seq.docker
+    environment:
+      - ACCEPT_EULA=Y
+    volumes:
+      - './_data/seq/data:/data'
+    ports:
+      - "8080:80"
+      - "5341"
+    dns:
+      - 10.0.0.10
+    networks:
+      microservices:
+        ipv4_address: 10.0.0.15
+  seq_envoy:
+    image: 'nicholasjackson/consul-envoy:v1.6.2-v0.10.0'
+    environment:
+      CONSUL_HTTP_ADDR: 'consul:8500'
+      CONSUL_GRPC_ADDR: 'consul:8502'
+      SERVICE_CONFIG: /config/seq.json
+      CENTRAL_CONFIG: /central_config/seq-defaults.hcl
+    volumes:
+      - './_config/service_config:/config'
+      - './_config/central_config:/central_config'
+    command:
+      - consul
+      - connect
+      - envoy
+      - '-sidecar-for'
+      - seq-v1
+    depends_on:
+      - consul
+    network_mode: 'service:seq'
+  fabio:
+    image: 'fabiolb/fabio'
+    ports:
+      - '443:443'
+      - '9998:9998'
+    depends_on:
+      - consul
+    volumes:
+      - ./_config/fabio:/etc/fabio
+    dns:
+      - 10.0.0.10
     networks:
       microservices: null
   consul:
     image: 'consul:latest'
-    command: consul agent -dev -log-level=warn -ui -client=0.0.0.0 -datacenter=dockercompose-dc
     hostname: consul
     container_name: consul
+    command: 'agent -config-dir=/consul/config -bind ''{{ GetPrivateInterfaces | attr "address" }}'' -client ''{{ GetPrivateInterfaces | attr "address" }}'' -bootstrap'
     networks:
       microservices: null
+    depends_on:
+      - dps
+    dns:
+      - 10.0.0.10
+  consul-agent:
+    image: 'consul:latest'
+    hostname: consul-agent
+    container_name: consul-agent
+    command: 'agent -join consul -config-dir=/consul/config -bind ''{{ GetPrivateInterfaces | attr "address" }}'' -client ''{{ GetPrivateInterfaces | attr "address" }}'''
+    networks:
+      microservices: null
+    depends_on:
+      - dps
+      - consul
+  vault:
+    container_name: vault
+    hostname: vault
+    image: 'vault:latest'
+    networks:
+      microservices: null
+    links:
+      - 'consul:consul'
+    depends_on:
+      - consul
+    command: consul-backup
   prometheus:
     image: prom/prometheus
     container_name: prometheus
@@ -53,11 +158,27 @@ services:
       - prometheus
     networks:
       microservices: null
+  dps:
+    image: defreitas/dns-proxy-server
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - MG_LOG_LEVEL=ERROR
+      - MG_REGISTER_CONTAINER_NAMES=1
+    hostname: dns.microservices
+    networks:
+      microservices:
+        ipv4_address: 10.0.0.10
 networks:
   microservices:
     driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.0.0/24
 volumes:
   prometheus:
     driver: local
   grafana:
+    driver: local
+  consul:
     driver: local
