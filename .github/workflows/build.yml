@@ -2,41 +2,35 @@ name: Build
 
 on: [push]
 
+env:
+    DOTNET_CLI_TELEMETRY_OPTOUT: 1
+    DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+
 jobs:
 
   build:
-    name: Run Build on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
+    name: Run Build on ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v3
 
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 2.2.401
-      env:
-        DOTNET_CLI_TELEMETRY_OPTOUT: 1
-        DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+        dotnet-version: '7.0.x'
 
     - name: Build .NET solution
-      env:
-        DOTNET_CLI_TELEMETRY_OPTOUT: 1
-        DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
       run: |
         dotnet --version
         dotnet build ./src/dotnet-microservices.sln --configuration Release
 
     - name: Build the deliveries Docker image
-      run: docker build . --file src/services/deliveries/Dockerfile --tag deliveries:${{ matrix.os }}-${{ github.sha }}
+      run: docker build . --file src/services/deliveries/Dockerfile --tag deliveries:${{ github.sha }}
 
     - name: Build the ordering Docker image
-      run: docker build . --file src/services/ordering/Dockerfile --tag ordering:${{ matrix.os }}-${{ github.sha }}
+      run: docker build . --file src/services/ordering/Dockerfile --tag ordering:${{ github.sha }}
 
     - name: Validate docker-compose-ubuntu
-      if: matrix.os == 'ubuntu-latest'
       run: |
         docker --version
         docker-compose --version
@@ -45,23 +39,11 @@ jobs:
         bash ./_scripts/apigateway-gen-certificate.sh
         docker-compose config
 
-    - name: Validate docker-compose-windows
-      if: matrix.os == 'windows-latest'
-      env:
-        DOTNET_CLI_TELEMETRY_OPTOUT: 1
-        DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
-      run: |
-        docker --version
-        docker-compose --version
-        cd compose
-        #powershell .\_scripts\apigateway-gen-certificate.ps1
-        docker-compose config
-
   sonarCloud:
     name: SonarCloud
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v3
     - name: SonarCloud Scan
       uses: sonarsource/sonarcloud-github-action@master
       env:

@@ -6,6 +6,7 @@ using Metrics;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Serilog;
 
 namespace deliveries
@@ -40,27 +41,34 @@ namespace deliveries
                 // In some rare cases, creating web host can fail.
                 // This style of logging increases the chances of logging this issue.
                 Log.Logger.Information("Bootstrapping deliveries app...");
-                using (var host = CreateWebHostBuilder(args).Build())
-                {
-                    host.Run();
-                }
+                using var host = CreateWebHostBuilder(args).Build();
+                host.Run();
             }
             catch (Exception e)
             {
+                // Happens rarely but when it does, you'll thank me. :)
+                Log.Logger.Fatal(e, "Unable to bootstrap deliveries app.");
                 // Happens rarely but when it does, you'll thank me. :)
                 Log.Logger.Fatal(e, "Unable to bootstrap deliveries app.");
             }
 
             // Make sure all the log sinks have processed the last log before closing the application.
             Log.CloseAndFlush();
+            }
+
+            // Make sure all the log sinks have processed the last log before closing the application.
+            Log.CloseAndFlush();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args)
+        public static IHostBuilder CreateWebHostBuilder(string[] args)
         {
-            return WebHost.CreateDefaultBuilder(args)
-                .ConfigurePrometheusEndpoint()
+            return Host.CreateDefaultBuilder(args)
+                .ConfigureWebHost(builder =>
+                {
+                    builder.ConfigurePrometheusEndpoint();
+                    builder.UseStartup<Startup>();
+                })
                 .ConfigureAppConfiguration((context, builder) => builder.ConfigureConsulSettings())
-                .UseStartup<Startup>()
                 .UseSerilog();
         }
     }
