@@ -48,12 +48,6 @@ namespace ordering
             {
                 // Happens rarely but when it does, you'll thank me. :)
                 Log.Logger.Fatal(e, "Unable to bootstrap ordering app.");
-                // Happens rarely but when it does, you'll thank me. :)
-                Log.Logger.Fatal(e, "Unable to bootstrap ordering app.");
-            }
-
-            // Make sure all the log sinks have processed the last log before closing the application.
-            Log.CloseAndFlush();
             }
 
             // Make sure all the log sinks have processed the last log before closing the application.

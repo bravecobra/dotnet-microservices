@@ -48,12 +48,6 @@ namespace deliveries
             {
                 // Happens rarely but when it does, you'll thank me. :)
                 Log.Logger.Fatal(e, "Unable to bootstrap deliveries app.");
-                // Happens rarely but when it does, you'll thank me. :)
-                Log.Logger.Fatal(e, "Unable to bootstrap deliveries app.");
-            }
-
-            // Make sure all the log sinks have processed the last log before closing the application.
-            Log.CloseAndFlush();
             }
 
             // Make sure all the log sinks have processed the last log before closing the application.
