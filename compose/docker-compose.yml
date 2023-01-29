@@ -15,7 +15,7 @@ services:
     dns:
       - 10.0.0.10
   ordering_envoy:
-    image: 'nicholasjackson/consul-envoy:v1.6.0-v0.10.0'
+    image: 'nicholasjackson/consul-envoy:v1.6.2-v0.10.0'
     environment:
       CONSUL_HTTP_ADDR: 'consul:8500'
       CONSUL_GRPC_ADDR: 'consul:8502'
@@ -46,7 +46,7 @@ services:
       microservices:
         ipv4_address: 10.0.0.4
   deliveries_envoy:
-    image: 'nicholasjackson/consul-envoy:v1.6.0-v0.10.0'
+    image: 'nicholasjackson/consul-envoy:v1.6.2-v0.10.0'
     environment:
       CONSUL_HTTP_ADDR: 'consul:8500'
       CONSUL_GRPC_ADDR: 'consul:8502'
@@ -81,7 +81,7 @@ services:
       microservices:
         ipv4_address: 10.0.0.15
   seq_envoy:
-    image: 'nicholasjackson/consul-envoy:v1.6.0-v0.10.0'
+    image: 'nicholasjackson/consul-envoy:v1.6.2-v0.10.0'
     environment:
       CONSUL_HTTP_ADDR: 'consul:8500'
       CONSUL_GRPC_ADDR: 'consul:8502'
