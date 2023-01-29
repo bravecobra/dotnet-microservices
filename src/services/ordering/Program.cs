@@ -6,6 +6,7 @@ using Metrics;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Serilog;
 
 namespace ordering
@@ -40,10 +41,8 @@ namespace ordering
                 // In some rare cases, creating web host can fail.
                 // This style of logging increases the chances of logging this issue.
                 Log.Logger.Information("Bootstrapping ordering app...");
-                using (var host = CreateWebHostBuilder(args).Build())
-                {
-                    host.Run();
-                }
+                using var host = CreateWebHostBuilder(args).Build();
+                host.Run();
             }
             catch (Exception e)
             {
@@ -55,16 +54,19 @@ namespace ordering
             Log.CloseAndFlush();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args)
+        public static IHostBuilder CreateWebHostBuilder(string[] args)
         {
-            return WebHost.CreateDefaultBuilder(args)
-                .ConfigurePrometheusEndpoint()
+            return Host.CreateDefaultBuilder(args)
+                .ConfigureWebHost(builder =>
+                {
+                    builder.ConfigurePrometheusEndpoint();
+                    builder.UseStartup<Startup>();
+                })
                 .ConfigureAppConfiguration((context, builder) =>
                 {
                     builder.ConfigureConsulSettings();
                     builder.AddJsonFile("appsettings.local.json", optional: true);
                 })
-                .UseStartup<Startup>()
                 .UseSerilog();
         }
     }
