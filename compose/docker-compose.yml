@@ -143,17 +143,6 @@ services:
       - 'consul:consul'
     depends_on:
       - consul
-  consul-backup:
-    container_name: consul-backup
-    build:
-      context: .
-      dockerfile: backup/Dockerfile
-    networks:
-      microservices: null
-    links:
-      - 'consul:consul'
-    volumes:
-      - './_data/consul/backup:/backup/'
     command: consul-backup
   prometheus:
     image: prom/prometheus
