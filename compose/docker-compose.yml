@@ -143,7 +143,6 @@ services:
       - 'consul:consul'
     depends_on:
       - consul
-    command: consul-backup
   prometheus:
     image: prom/prometheus
     container_name: prometheus
